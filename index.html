@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>$ whoisJonyck</title>
+	<link rel="stylesheet" href="style.css" />
+	<script src="script.js" defer></script>
+	<!-- Vercel Web Analytics (показывает страны посетителей в дашборде) -->
+	<script>
+	window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+	</script>
+	<script defer src="/_vercel/insights/script.js"></script>
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="terminal-window">
+
+			<!-- 🪟 Terminal header -->
+			<div class="terminal-header">
+				<span class="terminal-dot"></span>
+				<span class="terminal-dot"></span>
+				<span class="terminal-dot"></span>
+				<span class="terminal-title">about.exe ─ bash</span>
+			</div>
+
+			<!-- 👤 Profile -->
+			<div class="profile-section">
+				<img src="image/my-photo.png" alt="avatar" class="avatar" />
+				<div class="profile-info">
+					<h1>jonyck</h1>
+					<span class="badge">● fullstack developer</span>
+					<span class="status">➜ последний визит: сегодня</span>
+				</div>
+			</div>
+
+			<!-- 💻 Greeting -->
+			<div class="greeting">
+				<div class="prompt">
+					<span class="prompt-user">user</span>
+					<span style="color:rgba(255,255,255,0.2)">@</span>
+					<span class="prompt-path">~/profile</span>
+					<span class="prompt-symbol">$</span>
+				</div>
+				<span class="command">
+					cat about.md
+					<span class="cursor"></span>
+				</span>
+			</div>
+
+			<!-- 🔗 Links -->
+			<div class="links">
+
+				<a href="#" class="link bio-btn" id="bioBtn">
+					<span class="line-num">01</span>
+					<span class="link-icon">👤</span>
+					<span class="link-text">whoami — узнать обо мне</span>
+					<span class="link-arrow">→</span>
+				</a>
+
+				<a href="https://t.me/akheell9" class="link telegram" target="_blank">
+					<span class="line-num">02</span>
+					<span class="link-icon">✈️</span>
+					<span class="link-text">telegram — @akheell9</span>
+					<span class="link-arrow">→</span>
+				</a>
+
+				<a href="https://instagram.com/jonyckcrtz9" class="link instagram" target="_blank">
+					<span class="line-num">03</span>
+					<span class="link-icon">📸</span>
+					<span class="link-text">instagram — @jonyckcrtz9</span>
+					<span class="link-arrow">→</span>
+				</a>
+
+				<a href="mailto:jonyckcrtz@mail.ru" class="link email" target="_blank">
+					<span class="line-num">04</span>
+					<span class="link-icon">✉️</span>
+					<span class="link-text">email — jonyckcrtz@mail.ru</span>
+					<span class="link-arrow">→</span>
+				</a>
+
+			</div>
+
+			<!-- 🌤 Weather Radar Station -->
+			<div class="weather-panel" id="weatherPanel">
+				<div class="weather-header">
+					<span class="terminal-dot"></span>
+					<span class="terminal-dot"></span>
+					<span class="terminal-dot"></span>
+					<span class="weather-title">weather.exe — istanbul</span>
+				</div>
+				<div class="weather-body">
+					<div class="weather-radar-wrap">
+						<div class="weather-radar" id="weatherRadar">
+							<span class="radar-icon" id="weatherIcon">🌍</span>
+							<div class="radar-sweep" id="radarSweep"></div>
+							<div class="radar-ring r1"></div>
+							<div class="radar-ring r2"></div>
+							<div class="radar-ring r3"></div>
+						</div>
+					</div>
+
+					<div class="weather-temp" id="weatherTemp">
+						<span class="temp-digits">--°</span>
+						<span class="temp-unit">C</span>
+					</div>
+
+					<div class="weather-condition" id="weatherCondition">
+						<span class="sys-prefix">SYS.REPORT:</span>
+						<span class="condition-text" id="conditionText">SCANNING SATELLITE…</span>
+					</div>
+
+					<div class="weather-grid">
+						<div class="weather-cell">
+							<span class="cell-label">💧 HUM</span>
+							<span class="cell-value" id="humidityVal">--%</span>
+							<div class="cell-bar"><span id="humidityFill" style="width:0%"></span></div>
+						</div>
+						<div class="weather-cell">
+							<span class="cell-label">🌬 WIND</span>
+							<span class="cell-value" id="windVal">-- km/h</span>
+							<div class="cell-bar"><span id="windFill" style="width:0%"></span></div>
+						</div>
+						<div class="weather-cell">
+							<span class="cell-label">🌡 FEELS</span>
+							<span class="cell-value" id="feelsVal">--°</span>
+							<div class="cell-bar"><span id="feelsFill" style="width:0%"></span></div>
+						</div>
+					</div>
+
+					<div class="weather-footer">
+						<span class="update-time" id="updateTime">--:--</span>
+						<span class="update-status" id="updateStatus">◉ ONLINE</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- 📊 Footer stats -->
+			<div class="stats">
+				<div class="stat">links: <span>4</span></div>
+				<div class="stat" id="visitorLocation">visitor: <span>🌍 --</span></div>
+				<div class="stat">status: <span>online</span></div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- 📖 Modal -->
+	<div class="modal-overlay" id="bioModal">
+		<div class="modal">
+			<div class="modal-header">
+				<span class="dot"></span>
+				<span class="dot"></span>
+				<span class="dot"></span>
+				<h2>about.sh — bio</h2>
+			</div>
+			<button class="modal-close" id="closeBio">&times;</button>
+			<div class="modal-body">
+				<p>
+					<span class="comment"># 👤 whoami</span><br />
+					<span class="keyword">const</span> name = <span class="string">"jonyck"</span>;
+				</p>
+				<p>
+					<span class="comment"># 💼 stack</span><br />
+					<span class="keyword">const</span> skills = [
+					<span class="string">"Python"</span>,
+					<span class="string">"C#"</span>,
+					<span class="string">"JavaScript"</span>,
+					<span class="string">"TypeScript"</span>,
+					<span class="string">"React"</span>,
+					<span class="string">"Node.js"</span>];
+				</p>
+				<p>
+					<span class="comment"># 📝 bio</span><br />
+						<span class="function">console.log</span>(<span class="string">"био не будет. Не люблю рассказывать о себе"</span>);
+				</p>
+				<p>
+					<span class="comment"># 📬 contacts</span><br />
+					<span class="keyword">const</span> tg = <span class="string">"@akheell9"</span>;<br />
+					<span class="keyword">const</span> email = <span class="string">"jonyckcrtz@mail.ru"</span>;
+				</p>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

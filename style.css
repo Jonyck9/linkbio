@@ -1,0 +1,890 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+::selection {
+    background: rgba(0, 255, 170, 0.3);
+    color: #fff;
+}
+
+/* ===== 🖥️ Фон с тёмной сеткой ===== */
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    padding: 20px;
+    overflow-x: hidden;
+    background: #0a0e14;
+    position: relative;
+}
+
+/* Сетка как в VS Code / терминале */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(0, 255, 170, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 170, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Размытые цветные пятна как в VS Code Background */
+body::after {
+    content: '';
+    position: fixed;
+    top: -30%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0, 255, 170, 0.05), transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+    animation: ambientGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes ambientGlow {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+    100% { transform: translate(-80px, 60px) scale(1.3); opacity: 1; }
+}
+
+/* ===== 📦 Контейнер ===== */
+.container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 460px;
+    width: 100%;
+}
+
+/* ===== 🪟 Терминальное окно ===== */
+.terminal-window {
+    background: #121820;
+    border: 1px solid #1e2a36;
+    border-radius: 14px;
+    padding: 24px 28px 28px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 255, 170, 0.04);
+    animation: fadeSlideDown 0.8s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Строка заголовка терминала */
+.terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #1e2a36;
+}
+
+.terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.terminal-dot:nth-child(1) { background: #ff5f56; }
+.terminal-dot:nth-child(2) { background: #ffbd2e; }
+.terminal-dot:nth-child(3) { background: #27c93f; }
+
+.terminal-title {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 0.75rem;
+    margin-left: auto;
+    letter-spacing: 0.5px;
+}
+
+/* ===== 👤 Аватар ===== */
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+    text-align: left;
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards 0.2s;
+}
+
+.avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 255, 170, 0.3);
+    object-fit: cover;
+    animation: avatarGlow 3s ease-in-out infinite .6s;
+    flex-shrink: 0;
+}
+
+@keyframes avatarGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 170, 0.15); }
+    50% { box-shadow: 0 0 25px rgba(0, 255, 170, 0.3), 0 0 50px rgba(0, 255, 170, 0.08); }
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h1 {
+    color: #e6f1f5;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+}
+
+.profile-info .badge {
+    display: inline-block;
+    color: #00ffaa;
+    font-size: 0.75rem;
+    background: rgba(0, 255, 170, 0.1);
+    padding: 2px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 255, 170, 0.2);
+    font-weight: 500;
+}
+
+.profile-info .status {
+    display: block;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.7rem;
+    margin-top: 6px;
+}
+
+/* ===== 💻 Команда-приветствие ===== */
+.greeting {
+    text-align: left;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: rgba(0, 255, 170, 0.03);
+    border-left: 2px solid rgba(0, 255, 170, 0.3);
+    border-radius: 0 8px 8px 0;
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards 0.4s;
+}
+
+.greeting .prompt {
+    color: rgba(0, 255, 170, 0.8);
+    font-size: 0.8rem;
+}
+
+.greeting .prompt-user {
+    color: #ff8a65;
+}
+
+.greeting .prompt-path {
+    color: #64b5f6;
+}
+
+.greeting .prompt-symbol {
+    color: rgba(0, 255, 170, 0.6);
+}
+
+.greeting .command {
+    color: #e6f1f5;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    display: block;
+}
+
+.greeting .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background: rgba(0, 255, 170, 0.7);
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ===== 🔗 Ссылки ===== */
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #1e2a36;
+    border-radius: 8px;
+    color: #abb2bf;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    opacity: 0;
+    animation: linkSlideUp 0.5s ease-out forwards;
+    text-align: left;
+}
+
+.link:nth-child(1) { animation-delay: 0.3s; }
+.link:nth-child(2) { animation-delay: 0.4s; }
+.link:nth-child(3) { animation-delay: 0.5s; }
+.link:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes linkSlideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Линейка слева при наведении */
+.link::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 50%;
+    width: 3px;
+    height: 0;
+    background: #00ffaa;
+    border-radius: 0 2px 2px 0;
+    transition: all 0.3s ease;
+    transform: translateY(-50%);
+}
+
+.link:hover::before {
+    height: 60%;
+}
+
+/* Номер строки слева */
+.link .line-num {
+    color: rgba(255, 255, 255, 0.15);
+    font-size: 0.7rem;
+    min-width: 24px;
+    text-align: right;
+    user-select: none;
+    font-weight: 400;
+}
+
+.link .link-icon {
+    font-size: 1rem;
+    min-width: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.link .link-text {
+    flex: 1;
+}
+
+.link .link-arrow {
+    color: rgba(255, 255, 255, 0.15);
+    font-size: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.link:hover {
+    background: rgba(0, 255, 170, 0.04);
+    border-color: rgba(0, 255, 170, 0.2);
+    color: #e6f1f5;
+    transform: translateX(4px);
+}
+
+.link:hover .link-icon {
+    transform: scale(1.1);
+}
+
+.link:hover .link-arrow {
+    color: #00ffaa;
+    transform: translateX(4px);
+}
+
+.link:active {
+    transform: translateX(0) scale(0.98);
+}
+
+/* Специфичные цвета для платформ */
+.link.telegram .link-icon { color: #0088cc; }
+.link.telegram:hover { border-color: rgba(0, 136, 204, 0.3); }
+.link.telegram:hover::before { background: #0088cc; }
+
+.link.instagram .link-icon { color: #e1306c; }
+.link.instagram:hover { border-color: rgba(225, 48, 108, 0.3); }
+.link.instagram:hover::before { background: #e1306c; }
+
+.link.email .link-icon { color: #ffc107; }
+.link.email:hover { border-color: rgba(255, 193, 7, 0.3); }
+.link.email:hover::before { background: #ffc107; }
+
+/* 👤 Кнопка "Обо мне" */
+.link.bio-btn .link-icon { color: #00ffaa; }
+.link.bio-btn {
+    border-color: rgba(0, 255, 170, 0.15);
+    background: rgba(0, 255, 170, 0.03);
+}
+.link.bio-btn:hover {
+    border-color: rgba(0, 255, 170, 0.35);
+    background: rgba(0, 255, 170, 0.06);
+    box-shadow: 0 0 30px rgba(0, 255, 170, 0.06);
+}
+.link.bio-btn:hover::before { background: #00ffaa; }
+
+/* ===== 📊 Статистика/футер ===== */
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #1e2a36;
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards 0.8s;
+}
+
+.stat {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 0.7rem;
+    letter-spacing: 0.3px;
+}
+
+.stat span {
+    color: rgba(0, 255, 170, 0.5);
+}
+
+.stat .visitor-flag {
+    font-size: 0.9rem;
+    vertical-align: middle;
+    margin-right: 2px;
+}
+
+/* ===== ⚡ Анимации ===== */
+@keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* ===== 🌤 Weather Radar Station ===== */
+.weather-panel {
+    margin-top: 20px;
+    margin-bottom: 4px;
+    border: 1px solid #1a2a28;
+    border-radius: 10px;
+    background: rgba(0, 255, 170, 0.02);
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards 0.7s;
+    position: relative;
+}
+
+/* CRT scan line overlay */
+.weather-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.08) 2px,
+        rgba(0, 0, 0, 0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 2;
+}
+
+.weather-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid #1a2a28;
+}
+
+.weather-header .terminal-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.weather-header .terminal-dot:nth-child(1) { background: #ff5f56; }
+.weather-header .terminal-dot:nth-child(2) { background: #ffbd2e; }
+.weather-header .terminal-dot:nth-child(3) { background: #27c93f; }
+
+.weather-title {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 0.65rem;
+    margin-left: auto;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.weather-body {
+    padding: 18px 18px 14px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== 📡 Radar Circle ===== */
+.weather-radar-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.weather-radar {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: #0d1a15;
+    border: 1px solid rgba(0, 255, 170, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.radar-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 255, 170, 0.08);
+    pointer-events: none;
+}
+
+.radar-ring.r1 { width: 30px; height: 30px; }
+.radar-ring.r2 { width: 56px; height: 56px; }
+.radar-ring.r3 { width: 82px; height: 82px; }
+
+.radar-sweep {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+        transparent 0deg,
+        rgba(0, 255, 170, 0.15) 10deg,
+        rgba(0, 255, 170, 0.03) 45deg,
+        transparent 90deg
+    );
+    animation: radarSpin 3s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes radarSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.radar-icon {
+    font-size: 1.6rem;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 0 6px rgba(0, 255, 170, 0.3));
+    animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(0, 255, 170, 0.2)); }
+    50% { transform: scale(1.08); filter: drop-shadow(0 0 12px rgba(0, 255, 170, 0.5)); }
+}
+
+/* ===== 🌡 Temperature ===== */
+.weather-temp {
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.temp-digits {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #e6f1f5;
+    line-height: 1;
+    letter-spacing: -2px;
+    text-shadow: 0 0 30px rgba(0, 255, 170, 0.15);
+    transition: color 1s ease, text-shadow 1s ease;
+}
+
+.temp-unit {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgba(0, 255, 170, 0.5);
+    vertical-align: super;
+    margin-left: 2px;
+}
+
+/* ===== 📟 Condition ===== */
+.weather-condition {
+    text-align: center;
+    margin-bottom: 14px;
+    font-size: 0.75rem;
+}
+
+.sys-prefix {
+    color: rgba(0, 255, 170, 0.4);
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    margin-right: 6px;
+}
+
+.condition-text {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== 📊 Metric Cells ===== */
+.weather-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.weather-cell {
+    background: rgba(0, 255, 170, 0.03);
+    border: 1px solid rgba(0, 255, 170, 0.06);
+    border-radius: 6px;
+    padding: 8px 6px;
+    text-align: center;
+    transition: border-color 0.3s;
+}
+
+.weather-cell:hover {
+    border-color: rgba(0, 255, 170, 0.15);
+}
+
+.cell-label {
+    display: block;
+    font-size: 0.55rem;
+    color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+}
+
+.cell-value {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #e6f1f5;
+    margin-bottom: 5px;
+}
+
+.cell-bar {
+    height: 3px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.cell-bar span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0, 255, 170, 0.4), #00ffaa);
+    border-radius: 2px;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== 📡 Footer ===== */
+.weather-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(0, 255, 170, 0.06);
+    padding-top: 10px;
+}
+
+.update-time {
+    color: rgba(255, 255, 255, 0.15);
+    font-size: 0.6rem;
+}
+
+.update-status {
+    color: rgba(0, 255, 170, 0.6);
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    animation: statusBlink 2s ease-in-out infinite;
+}
+
+@keyframes statusBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ===== 🌡 Temp color modes ===== */
+.temp-cold .temp-digits {
+    color: #4fc3f7;
+    text-shadow: 0 0 30px rgba(79, 195, 247, 0.2);
+}
+.temp-cool .temp-digits {
+    color: #66bb6a;
+    text-shadow: 0 0 30px rgba(102, 187, 106, 0.2);
+}
+.temp-warm .temp-digits {
+    color: #ffa726;
+    text-shadow: 0 0 30px rgba(255, 167, 38, 0.2);
+}
+.temp-hot .temp-digits {
+    color: #ef5350;
+    text-shadow: 0 0 30px rgba(239, 83, 80, 0.2);
+}
+
+/* ===== 🌧 Weather animations ===== */
+.weather-radar.clear-day {
+    box-shadow: 0 0 20px rgba(255, 200, 50, 0.1), 0 0 40px rgba(255, 200, 50, 0.05);
+    border-color: rgba(255, 200, 50, 0.2);
+}
+.weather-radar.clear-day .radar-icon {
+    animation: sunPulse 2s ease-in-out infinite;
+}
+
+.weather-radar.rainy .radar-icon {
+    animation: rainShake 0.6s ease-in-out infinite;
+}
+
+.weather-radar.cloudy .radar-icon {
+    filter: drop-shadow(0 0 8px rgba(150, 170, 190, 0.3));
+}
+
+.weather-radar.stormy {
+    box-shadow: 0 0 20px rgba(200, 50, 255, 0.08);
+    border-color: rgba(200, 50, 255, 0.2);
+}
+.weather-radar.stormy .radar-icon {
+    animation: stormFlash 1.5s ease-in-out infinite;
+}
+
+.weather-radar.snowy .radar-icon {
+    animation: snowFloat 3s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+@keyframes rainShake {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+@keyframes stormFlash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+    52% { opacity: 1; }
+    54% { opacity: 0.6; }
+}
+
+@keyframes snowFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-4px) rotate(5deg); }
+}
+
+/* Error state */
+.weather-panel.error .radar-icon {
+    animation: none;
+}
+.weather-panel.error .condition-text {
+    color: rgba(239, 83, 80, 0.7);
+}
+.weather-panel.error .update-status {
+    color: rgba(239, 83, 80, 0.6);
+}
+
+/* ===== 📖 Модальное окно ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    position: relative;
+    background: #121820;
+    border: 1px solid #1e2a36;
+    border-radius: 14px;
+    padding: 32px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    transform: scale(0.95) translateY(10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-overlay.open .modal {
+    transform: scale(1) translateY(0);
+}
+
+/* Шапка модалки в стиле терминала */
+.modal-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #1e2a36;
+}
+
+.modal-header .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.modal-header .dot:nth-child(1) { background: #ff5f56; }
+.modal-header .dot:nth-child(2) { background: #ffbd2e; }
+.modal-header .dot:nth-child(3) { background: #27c93f; }
+
+.modal-header h2 {
+    color: #e6f1f5;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    line-height: 1;
+    padding: 4px;
+    font-family: inherit;
+}
+
+.modal-close:hover {
+    color: #ff5f56;
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    color: #abb2bf;
+    font-size: 0.85rem;
+    line-height: 1.8;
+    font-family: inherit;
+}
+
+.modal-body p {
+    margin-bottom: 12px;
+}
+
+.modal-body .comment {
+    color: rgba(255, 255, 255, 0.25);
+    font-style: italic;
+}
+
+.modal-body .keyword {
+    color: #c678dd;
+}
+
+.modal-body .string {
+    color: #98c379;
+}
+
+.modal-body .function {
+    color: #61afef;
+}
+
+.modal-body .number {
+    color: #d19a66;
+}
+
+/* ===== 📱 Адаптация под телефон ===== */
+@media (max-width: 480px) {
+    .terminal-window {
+        padding: 16px 18px 20px;
+    }
+
+    .profile-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .profile-info h1 {
+        font-size: 1.1rem;
+    }
+
+    .link {
+        padding: 11px 14px;
+        font-size: 0.8rem;
+    }
+
+    .link .line-num {
+        display: none;
+    }
+
+    .modal {
+        padding: 24px 20px;
+    }
+
+    .weather-body {
+        padding: 14px 12px 12px;
+    }
+
+    .weather-radar {
+        width: 78px;
+        height: 78px;
+    }
+
+    .radar-icon {
+        font-size: 1.3rem;
+    }
+
+    .radar-ring.r1 { width: 24px; height: 24px; }
+    .radar-ring.r2 { width: 46px; height: 46px; }
+    .radar-ring.r3 { width: 68px; height: 68px; }
+
+    .temp-digits {
+        font-size: 2.4rem;
+    }
+
+    .temp-unit {
+        font-size: 1rem;
+    }
+
+    .weather-grid {
+        gap: 6px;
+    }
+
+    .cell-value {
+        font-size: 0.7rem;
+    }
+}
